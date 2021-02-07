@@ -1,16 +1,16 @@
 FROM		alpine:latest
 
-RUN 		apk add --no-cache mariadb \
-			mariadb-client \
-			mysql
+RUN 		apk add --no-cache mariadb mariadb-client
 
-COPY 		./configbase.sql ./etc/
 COPY 		./wordpress.sql ./
+COPY 		./configbase.sql ./
+COPY		./setup.sh ./
 
-RUN 		mkdir -p /run/mysqld \
-       		&& chown -R root:root /run/mysqld \
+RUN 		mkdir -p /run/mysqld 
+COPY 		./init.cnf /etc/
+
+RUN 		chmod +x ./setup.sh
 
 EXPOSE		3306
 
-CMD 		mysql -uroot -p mysql < ./etc/configbase.sql 
-ENTRYPOINT  mariadb-install-db --datadir="/var/lib/mysql" tail -f /dev/null
+CMD 		./setup.sh

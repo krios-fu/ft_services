@@ -1,10 +1,21 @@
 FROM		alpine:latest
 
-COPY		/setup.sh ./
+COPY		setup.sh config.inc.php ./
 
-RUN 		apk add --no-cache phpmyadmin
+RUN         apk update && \
+	        apk add --no-cache php7 php7-fpm php7-opcache php7-gd php7-mysqli \
+	        php7-zlib php7-curl php7-mbstring php7-json php7-session
 
-COPY		/config.inc.php /www/
+ADD         https://files.phpmyadmin.net/phpMyAdmin/5.0.2/phpMyAdmin-5.0.2-english.tar.gz .
+
+# Install PHPMyAdmin
+RUN         tar -xvf phpMyAdmin-5.0.2-english.tar.gz && \
+	        mv phpMyAdmin-5.0.2-english /www && \
+	        mv config.inc.php /www/ && \
+	        rm -f phpMyAdmin-5.0.2-english.tar.gz
+
+
+
 RUN 		chmod +x ./setup.sh
 
 EXPOSE		5000
