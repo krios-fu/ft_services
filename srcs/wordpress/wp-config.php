@@ -25,7 +25,7 @@ define( 'DB_USER', 'kriosfu' );
 define( 'DB_PASSWORD', 'kriosfu' );
 
 /** Host de MySQL (es muy probable que no necesites cambiarlo) */
-define( 'DB_HOST', 'localhost' );
+define( 'DB_HOST', 'mysql' );
 
 /** Codificación de caracteres para la base de datos. */
 define( 'DB_CHARSET', 'utf8mb4' );

@@ -12,11 +12,11 @@ ADD https://wordpress.org/latest.tar.gz .
 
 
 RUN tar -xvf latest.tar.gz && \
-	mv wordpress /www && \
-	mv wp-config.php /www/wordpress && \
+	mv /wordpress /var/www/ && \
+	mv wp-config.php /var/www/wordpress && \
 	rm -f latest.tar.gz
 
 
-EXPOSE 5050
+EXPOSE 80
 
-CMD /usr/bin/php -S 0.0.0.0:80 -t /www/
+CMD php -S 0.0.0.0:5050 -t /var/www/

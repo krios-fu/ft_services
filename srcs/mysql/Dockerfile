@@ -1,16 +1,18 @@
-FROM		alpine:latest
+FROM alpine:latest
 
-RUN 		apk add --no-cache mariadb mariadb-client
+COPY  wordpress.sql my.cnf init_file setup.sh ./
 
-COPY 		./wordpress.sql ./
-COPY 		./configbase.sql ./
-COPY		./setup.sh ./
+# Install MySQL and dependencies
+RUN apk update && \
+	apk add --no-cache mysql mysql-client
 
-RUN 		mkdir -p /run/mysqld 
-COPY 		./init.cnf /etc/
+# Setup MySQL
+RUN mkdir -p /run/mysqld && \
+    chown -R root:root /run/mysqld && \
+	mv my.cnf /etc/
 
-RUN 		chmod +x ./setup.sh
+RUN 	chmod +x ./setup.sh
 
-EXPOSE		3306
+EXPOSE 3306
 
-CMD 		./setup.sh
+CMD ./setup.sh
