@@ -1,6 +1,6 @@
 FROM alpine:latest
 
-COPY wp-config.php ./
+COPY wp-config.php ./var/www/ 
 
 
 RUN apk update && \
@@ -10,13 +10,13 @@ RUN apk update && \
 
 ADD https://wordpress.org/latest.tar.gz .
 
+RUN 	tar -xvf latest.tar.gz  --strip-components=1 -C /var/www/ && \
+		rm -f latest.tar.gz
 
-RUN tar -xvf latest.tar.gz && \
-	mv /wordpress /var/www/ && \
-	mv wp-config.php /var/www/wordpress && \
-	rm -f latest.tar.gz
-
+RUN		mkdir -p /var/www/ && \
+		chmod 755 /var/www/ && \
+		chmod 755 -R /var/www/*
 
 EXPOSE 80
 
-CMD php -S 0.0.0.0:5050 -t /var/www/
+CMD php -S 0.0.0.0:80 -t var/www/
