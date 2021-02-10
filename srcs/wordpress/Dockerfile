@@ -17,6 +17,6 @@ RUN		mkdir -p /var/www/ && \
 		chmod 755 /var/www/ && \
 		chmod 755 -R /var/www/*
 
-EXPOSE 80
+EXPOSE 5050
 
 CMD php -S 0.0.0.0:80 -t var/www/
