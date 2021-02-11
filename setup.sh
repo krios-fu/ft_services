@@ -2,13 +2,13 @@
 
 start_minikube ()
 {
-    echo  "\n\n\n\t🖥 Starting minikube 🐳 \n";
+    echo  "\n\n\n\t🖥  Starting ft_services 🐳 \n";
     minikube start --driver=virtualbox
     sleep 2
     echo "\n\n\n\t🔄 Starting Proxy\n"; 
     kubectl proxy &
     sleep 5
-    echo  "\tConnect 🐳  with minkube" 
+    echo  "\n\n\n\tConnect 🐳  with minkube" 
     eval $(minikube -p minikube docker-env)
 
 }
