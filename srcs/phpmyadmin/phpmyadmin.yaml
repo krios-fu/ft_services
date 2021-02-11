@@ -11,9 +11,9 @@ spec:
     app: phpmyadmin
   ports:
   - port: 5000
-    targetPort: 80
+    targetPort: 5000
     protocol: TCP
-  loadBalancerIP: 172.17.0.4
+  type: LoadBalancer
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -35,10 +35,10 @@ spec:
         image: phpmyadmin
         imagePullPolicy: Never
         resources:
-          limits:
-            memory: "128Mi"
-            cpu: "500m"
+        args:
+          - sleep
+          - infinity 
         ports:
-        - containerPort: 80
+        - containerPort: 5000
           name: phpmyadmin
           protocol: TCP

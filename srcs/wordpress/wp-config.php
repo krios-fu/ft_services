@@ -33,6 +33,9 @@ define( 'DB_CHARSET', 'utf8mb4' );
 /** Cotejamiento de la base de datos. No lo modifiques si tienes dudas. */
 define('DB_COLLATE', '');
 
+/** [ADDED] Allow Wordpress to change files when updating */
+define( 'FS_METHOD', 'direct' );
+
 /**#@+
  * Claves únicas de autentificación.
  *
