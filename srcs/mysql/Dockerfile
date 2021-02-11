@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM alpine:3.12.1
 
 COPY  wordpress.sql my.cnf init_file setup.sh ./
 
