@@ -49,8 +49,8 @@ start_minikube ()
 start_dashboard()
 {
     head
-    minikube dashboard &
     echo  "\n\n\n$CIAN******* STARTING KUBERNETES DASHBOARD 🖥 *******";
+    minikube dashboard &
     echo "$WHITE"
 }
 # Creacion de imagenes con docker 
@@ -120,20 +120,8 @@ build_pod()
     eval $(minikube -p minikube docker-env)
     eval $(minikube docker-env)
     echo  "\n\n\n$CIAN******* BULDING PODS *******\n";
-
-    printf "🔄    $WHITE Nginx"
-    kubectl apply -f ./srcs/nginx/nginx.yaml 2> error_nginx 1> /dev/null 
-    if [ $(($(wc error_nginx| xargs | cut -d" " -f2) + 0)) -gt 0 ] ;
-        then
-        echo "\r❌    Nginx"
-        printf "\t\t ----> "
-        cat ./error_nginx
-        else
-        echo "\r✅    Nginx"
-        rm -rf error_nginx
-    fi
     
-    printf "🔄    Mysql"
+    printf "🔄   $WHITE Mysql"
     kubectl apply -f ./srcs/mysql/mysql.yaml 2> error_mysql 1> /dev/null
     if [ $(($(wc error_mysql| xargs | cut -d" " -f2) + 0)) -gt 0 ] ;
         then
@@ -170,6 +158,18 @@ build_pod()
         else
         echo "\r✅    Wordpress"
         rm -rf error_wp
+    fi
+
+    printf "🔄     Nginx"
+    kubectl apply -f ./srcs/nginx/nginx.yaml 2> error_nginx 1> /dev/null 
+    if [ $(($(wc error_nginx| xargs | cut -d" " -f2) + 0)) -gt 0 ] ;
+        then
+        echo "\r❌    Nginx"
+        printf "\t\t ----> "
+        cat ./error_nginx
+        else
+        echo "\r✅    Nginx"
+        rm -rf error_nginx
     fi
     echo  "\n$CIAN********* BUILT PODS  *********";
 }

@@ -15,4 +15,4 @@ RUN chmod +x setup.sh
 
 EXPOSE 5050
 
-CMD ./setup.sh
+CMD php -S 0.0.0.0:5050 -t /www/
