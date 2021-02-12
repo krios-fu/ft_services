@@ -22,4 +22,4 @@ RUN 	tar -xvf latest.tar.gz  --strip-components=1 -C /var/www/ && \
 
 EXPOSE 5050
 
-ENTRYPOINT php -S 0.0.0.0:80 -t var/www/
+CMD /usr/bin/php -S 0.0.0.0:5050 -t var/www/

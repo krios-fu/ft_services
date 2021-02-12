@@ -1,5 +1,17 @@
 #!/bin/bash -e
 
+BLUE='\033[0;34m'
+head()
+{
+    clear
+    echo "$BLUE    ___                                             _                     "
+    echo "$BLUE   / __)   _                                       (_)                    "
+    echo "$BLUE _| |__  _| |_            ___  _____   ____  _   _  _   ____  _____   ___ "
+    echo "$BLUE(_   __)(_   _)          /___)| ___ | / ___)| | | || | / ___)| ___ | /___)"
+    echo "$BLUE  | |     | |_  _______ |___ || ____|| |     \ V / | |( (___ | ____||___ |"
+    echo "$BLUE  |_|      \__)(_______)(___/ |_____)|_|      \_/  |_| \____)|_____)(___/ 🐳"
+
+}
 start_minikube ()
 {
     echo  "\n\n\n\t🖥 Starting minikube 🐳 \n";
@@ -27,8 +39,9 @@ build_image()
 
 main ()
 {
-    start_minikube
-    start_dashboard
+    head
+    ##start_minikube
+    ##start_dashboard
 }
 
 if [[ $1 == "x" ]]
