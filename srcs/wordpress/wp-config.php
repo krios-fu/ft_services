@@ -33,9 +33,6 @@ define( 'DB_CHARSET', 'utf8mb4' );
 /** Cotejamiento de la base de datos. No lo modifiques si tienes dudas. */
 define('DB_COLLATE', '');
 
-/** [ADDED] Allow Wordpress to change files when updating */
-define( 'FS_METHOD', 'direct' );
-
 /**#@+
  * Claves únicas de autentificación.
  *
@@ -78,7 +75,7 @@ define('WP_DEBUG', false);
 
 /** WordPress absolute path to the Wordpress directory. */
 if ( !defined('ABSPATH') )
-	define('ABSPATH', dirname(__FILE__) . '/');
+	define('ABSPATH', __DIR__ . '/var/www/wordpress');
 
 /** Sets up WordPress vars and included files. */
 require_once(ABSPATH . 'wp-settings.php');

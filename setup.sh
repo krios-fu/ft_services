@@ -23,7 +23,7 @@ head()
 start_minikube ()
 {
     echo  "\n\n\n$CIAN******* STARTING MINIKUBE 🖥 *******\n$WHITE";
-    minikube start --driver=virtualbox
+    minikube start --driver=docker
     sleep 2
     head
     #echo  "\n\n\n$CIAN******* STARTING PROXY*******\n$WHITE";

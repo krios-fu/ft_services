@@ -2,11 +2,9 @@ apiVersion: v1
 kind: Service
 metadata:
   name: wordpress
-  namespace: default
   labels:
     app: wordpress
 spec:
-  externalTrafficPolicy: Local
   selector:
     app: wordpress
   ports:
@@ -19,12 +17,13 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: wordpress
-  namespace: default
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: wordpress
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
@@ -34,8 +33,9 @@ spec:
       - name: wordpress
         image: wordpress
         imagePullPolicy: Never
-        resources:
+        args:
+          - sleep
+          - infinity
         ports:
         - containerPort: 5050
           name: wordpress
-          protocol: TCP
