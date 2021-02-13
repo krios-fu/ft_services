@@ -11,31 +11,52 @@ spec:
     protocol: TCP
   selector:
     app: mysql
+    tier: mysql
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pvc
+  labels:
+    app: mysql
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: mysql
   labels:
     app: mysql
-  name: mysql
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: mysql
+      tier: mysql
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
         app: mysql
+        tier: mysql
     spec:
       containers:
       - image: mysql
         name: mysql
         imagePullPolicy: Never
-        resources:
-          limits:
-            memory: "128Mi"
-            cpu: "500m"
         ports:
         - containerPort: 3306
           name: mysql
+        volumeMounts:
+          - name: mysql-pvc-storage
+            mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-pvc-storage
+        persistenVolumeClaim:
+          claimName: mysql-pvc

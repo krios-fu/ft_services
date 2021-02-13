@@ -23,12 +23,12 @@ head()
 start_minikube ()
 {
     echo  "\n\n\n$CIAN******* STARTING MINIKUBE 🖥 *******\n$WHITE";
-    minikube start --driver=docker
+    minikube start --driver=virtualbox
     sleep 2
     head
-    #echo  "\n\n\n$CIAN******* STARTING PROXY*******\n$WHITE";
-    #kubectl proxy & 1> /dev/null
-    #sleep 5
+    echo  "\n\n\n$CIAN******* STARTING PROXY*******\n$WHITE";
+    kubectl proxy & > /dev/null
+    sleep 5
     echo  "\n\n\n$CIAN******* METALLB CONFIGURE*******\n$WHITE";
     printf "🔄    $WHITE Setting metallb...\n"
     minikube addons enable metrics-server
@@ -120,7 +120,19 @@ build_pod()
     eval $(minikube -p minikube docker-env)
     eval $(minikube docker-env)
     echo  "\n\n\n$CIAN******* BULDING PODS *******\n";
-    
+
+    printf "🔄     Nginx"
+    kubectl apply -f ./srcs/nginx/nginx.yaml 2> error_nginx 1> /dev/null 
+    if [ $(($(wc error_nginx| xargs | cut -d" " -f2) + 0)) -gt 0 ] ;
+        then
+        echo "\r❌    Nginx"
+        printf "\t\t ----> "
+        cat ./error_nginx
+        else
+        echo "\r✅    Nginx"
+        rm -rf error_nginx
+    fi
+
     printf "🔄   $WHITE Mysql"
     kubectl apply -f ./srcs/mysql/mysql.yaml 2> error_mysql 1> /dev/null
     if [ $(($(wc error_mysql| xargs | cut -d" " -f2) + 0)) -gt 0 ] ;
@@ -159,19 +171,7 @@ build_pod()
         echo "\r✅    Wordpress"
         rm -rf error_wp
     fi
-
-    printf "🔄     Nginx"
-    kubectl apply -f ./srcs/nginx/nginx.yaml 2> error_nginx 1> /dev/null 
-    if [ $(($(wc error_nginx| xargs | cut -d" " -f2) + 0)) -gt 0 ] ;
-        then
-        echo "\r❌    Nginx"
-        printf "\t\t ----> "
-        cat ./error_nginx
-        else
-        echo "\r✅    Nginx"
-        rm -rf error_nginx
-    fi
-    echo  "\n$CIAN********* BUILT PODS  *********";
+        echo  "\n$CIAN********* BUILT PODS  *********";
 }
 
 main ()
