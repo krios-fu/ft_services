@@ -7,27 +7,45 @@ metadata:
 spec:
   selector:
     app: wordpress
+    tier: frontend
   ports:
   - port: 5050
     targetPort: 5050
     protocol: TCP
   type: LoadBalancer
 ---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: wordpress-pvc
+  labels:
+    app: wordpress
+spec:
+  accessModes: 
+    - ReadWriteOnce
+  resorces:
+    requests:
+      storage: 20Gi
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: wordpress
+  labels:
+    app: wordpress
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: wordpress
+      tier: frontend
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
         app: wordpress
+        tier: frontend
     spec:
       containers:
       - name: wordpress
@@ -39,3 +57,10 @@ spec:
         ports:
         - containerPort: 5050
           name: wordpress
+        volumeMounts:
+          - name: wordpress-pvs
+            mountPath: /var/www/html
+      volumes:
+      - name: wordpress-pvs
+        persistentVolumeClaim:
+          claimName: wordpress-pvc
