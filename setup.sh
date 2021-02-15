@@ -34,6 +34,7 @@ start_minikube ()
     minikube addons enable metrics-server
     echo "✅ Configured               "
     kubectl apply -f ./srcs/metallb/metallb.yaml
+    sleep 2
     minikube addons enable metallb
     sleep 5
     head

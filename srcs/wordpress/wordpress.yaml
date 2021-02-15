@@ -17,15 +17,15 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: wordpress-pvc
+  name: wp-pv-claim
   labels:
     app: wordpress
 spec:
   accessModes: 
-    - ReadWriteOnce
-  resorces:
+  - ReadWriteOnce
+  resources:
     requests:
-      storage: 20Gi
+      storage: 1Gi
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -48,19 +48,16 @@ spec:
         tier: frontend
     spec:
       containers:
-      - name: wordpress
-        image: wordpress
-        imagePullPolicy: Never
-        args:
-          - sleep
-          - infinity
-        ports:
-        - containerPort: 5050
-          name: wordpress
-        volumeMounts:
-          - name: wordpress-pvs
+        - name: wordpress
+          image: wordpress
+          imagePullPolicy: Never
+          ports:
+          - containerPort: 5050
+            name: wordpress
+          volumeMounts:
+          - name: wordpress-persistent-storage
             mountPath: /var/www/html
       volumes:
-      - name: wordpress-pvs
+      - name: wordpress-persistent-storage
         persistentVolumeClaim:
-          claimName: wordpress-pvc
+          claimName: wp-pv-claim
