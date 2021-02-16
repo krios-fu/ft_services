@@ -27,9 +27,6 @@ define( 'DB_PASSWORD', 'kriosfu' );
 /** Host de MySQL (es muy probable que no necesites cambiarlo) */
 define( 'DB_HOST', 'mysql' );
 
-define('WP_HOME', 'http://$IPIP:5050' );
-
-define('WP_SITEURL', 'http://$IP:5050' );
 /** Codificación de caracteres para la base de datos. */
 define( 'DB_CHARSET', 'utf8mb4' );
 

@@ -29,14 +29,6 @@ start_minikube ()
     echo  "\n\n\n$CIAN******* STARTING PROXY*******\n$WHITE";
     kubectl proxy & > /dev/null
     sleep 5
-    echo  "\n\n\n$CIAN******* METALLB CONFIGURE*******\n$WHITE";
-    printf "🔄    $WHITE Setting metallb...\n"
-    minikube addons enable metrics-server
-    echo "✅ Configured               "
-    kubectl apply -f ./srcs/metallb/metallb.yaml
-    sleep 2
-    minikube addons enable metallb
-    sleep 5
     head
     printf "\n\n\n🔄   $CIAN CONNECTING WITH DOCKER 🐳 "
     sleep 2
@@ -46,7 +38,19 @@ start_minikube ()
     sleep 2
 }
 
-
+configure_metallb()
+{
+    clear
+    head
+    echo  "\n\n\n$CIAN******* METALLB CONFIGURE*******\n$WHITE";
+    minikube addons enable metrics-server
+    printf "🔄    $WHITE Setting metallb..."
+    echo "✅ Configured               "
+    kubectl apply -f ./srcs/metallb/metallb.yaml
+    sleep 2
+    minikube addons enable metallb
+    sleep 5
+}
 start_dashboard()
 {
     head
@@ -181,6 +185,8 @@ main ()
     start_minikube
     sleep 7
     build_image
+    sleep 7
+    configure_metallb
     sleep 7
     build_pod
     sleep 7

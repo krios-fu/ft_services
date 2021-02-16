@@ -13,4 +13,4 @@ COPY wp-config.php /var/www/wordpress/
 
 EXPOSE 5050
 
-ENTRYPOINT php -S 0.0.0.0:5050 -t /var/www/wordpress/
+ENTRYPOINT php -S 0.0.0.0:80 -t /var/www/wordpress/
