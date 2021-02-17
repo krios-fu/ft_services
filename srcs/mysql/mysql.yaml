@@ -1,13 +1,16 @@
 apiVersion: v1
 kind: Service
 metadata:
+  labels:
+    app: mysql
   name: mysql
 spec:
-  selector:
-    app: wordpress
   ports:
   - port: 3306
     targetPort: 3306
+    protocol: TCP
+  selector:
+    app: mysql
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -21,10 +24,13 @@ spec:
       storage: 2Gi
   accessModes:
     - ReadWriteOnce
+
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  labels:
+    app: mysql
   name: mysql
 spec:
   replicas: 1
@@ -37,11 +43,13 @@ spec:
         app: mysql
     spec:
       containers:
-      - name: mysql
-        image: mysql
-        args:
-          - sleep
-          - infinity
+      - image: mysql
+        name: mysql
+        imagePullPolicy: Never
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
         ports:
         - containerPort: 3306
           name: mysql

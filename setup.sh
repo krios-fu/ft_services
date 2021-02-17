@@ -22,6 +22,7 @@ head()
 }
 start_minikube ()
 {
+    
     echo  "\n\n\n$CIAN******* STARTING MINIKUBE 🖥 *******\n$WHITE";
     minikube start --driver=virtualbox
     sleep 2
@@ -38,18 +39,29 @@ start_minikube ()
     sleep 2
 }
 
+function reset_virtualbox(){
+
+	echo "\n\n\🧼 Cleaning DHCP ..."
+	kill -9 $(ps aux | grep -i "vboxsvc\|vboxnetdhcp" | awk '{print $2}') 2>/dev/null
+
+	if [[ -f ~/Library/VirtualBox/HostInterfaceNetworking-vboxnet0-Dhcpd.leases ]] ; then
+        rm  ~/Library/VirtualBox/HostInterfaceNetworking-vboxnet0-Dhcpd.leases
+	fi
+	echo  "🧙‍♂️ Magic has been done"
+
+}
+
 configure_metallb()
 {
     clear
     head
     echo  "\n\n\n$CIAN******* METALLB CONFIGURE*******\n$WHITE";
-    minikube addons enable metrics-server
     printf "🔄    $WHITE Setting metallb..."
-    echo "✅ Configured               "
-    kubectl apply -f ./srcs/metallb/metallb.yaml
-    sleep 2
     minikube addons enable metallb
+    sleep 7
+    kubectl apply -f ./srcs/metallb/metallb.yaml
     sleep 5
+    minikube addons enable metrics-server
 }
 start_dashboard()
 {
@@ -130,7 +142,7 @@ build_pod()
     kubectl apply -f ./srcs/nginx/nginx.yaml 2> error_nginx 1> /dev/null 
     if [ $(($(wc error_nginx| xargs | cut -d" " -f2) + 0)) -gt 0 ] ;
         then
-        echo "\r❌    Nginx"
+        echo "$WHITE\r❌    Nginx"
         printf "\t\t ----> "
         cat ./error_nginx
         else
@@ -138,7 +150,7 @@ build_pod()
         rm -rf error_nginx
     fi
 
-    printf "🔄   $WHITE Mysql"
+    printf "🔄    Mysql"
     kubectl apply -f ./srcs/mysql/mysql.yaml 2> error_mysql 1> /dev/null
     if [ $(($(wc error_mysql| xargs | cut -d" " -f2) + 0)) -gt 0 ] ;
         then
@@ -181,15 +193,19 @@ build_pod()
 
 main ()
 {
+    #minikube delete
+    #sleep 3
     head
+    #reset_virtualbox
+    #sleep 5
     start_minikube
     sleep 7
     build_image
-    sleep 7
-    configure_metallb
-    sleep 7
+    sleep 5
     build_pod
-    sleep 7
+    sleep 5
+    configure_metallb
+    sleep 3
     start_dashboard
 }
 

@@ -6,15 +6,16 @@ metadata:
   labels:
     app: nginx
 spec:
-  externalTrafficPolicy: Local
   selector:
     app: nginx
   ports:
   - name: http
     port: 80
     targetPort: 80
+    protocol: TCP
   - name: https
     port: 443
+    protocol: TCP
   - name: ssh
     port: 22
     protocol: TCP
