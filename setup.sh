@@ -12,31 +12,26 @@ head()
     clear
     clear
     clear
-    echo "$GREEN    ___                                             _                     "
-    echo "$GREEN   / __)   _                                       (_)                    "
-    echo "$GREEN _| |__  _| |_            ___  _____   ____  _   _  _   ____  _____   ___ "
-    echo "$GREEN(_   __)(_   _)          /___)| ___ | / ___)| | | || | / ___)| ___ | /___)"
+    echo "$GREEN    ___                                             _                    "
+    echo "$GREEN   / __)   _             ⭐️ ⭐️ ⭐️ ⭐️               (_)                   "
+    echo "$GREEN _| |__  _| |_         ⭐️ ___  _____   ____  _   _  _   ____  _____   ___ "
+    echo "$GREEN(_   __)(_   _)      ⭐️  /___)| ___ | / ___)| | | || | / ___)| ___ | /___)"
     echo "$GREEN  | |     | |_  _______ |___ || ____|| |     \ V / | |( (___ | ____||___ |"
     echo "$GREEN  |_|      \__)(_______)(___/ |_____)|_|      \_/  |_| \____)|_____)(___/ 🐳"
-
 }
 start_minikube ()
 {
     
-    echo  "\n\n\n$CIAN******* STARTING MINIKUBE 🖥 *******\n$WHITE";
+    echo  "\n\n\n$CIAN************************ $WHITE ⭐️ STARTING MINIKUBE ⭐️ $CIAN************************\n$WHITE";
     minikube start --driver=virtualbox
     sleep 2
-    head
-    echo  "\n\n\n$CIAN******* STARTING PROXY*******\n$WHITE";
+    printf "\n\n\n📡   CONNECTING PROXY  "
     kubectl proxy & > /dev/null
     sleep 5
-    head
-    printf "\n\n\n🔄   $CIAN CONNECTING WITH DOCKER 🐳 "
-    sleep 2
-    head
-    echo "\r\n\n\n✅    $CIAN CONNECTED TO DOCKER    🐳 "
+    printf "\n🔄   $CIAN CONNECTING WITH DOCKER 🐳 "
+    sleep 3
+    echo "\r✅    $CIAN CONNECTED TO DOCKER    🐳 "
     eval $(minikube -p minikube docker-env)
-    sleep 2
 }
 
 function reset_virtualbox(){
@@ -55,28 +50,28 @@ configure_metallb()
 {
     clear
     head
-    echo  "\n\n\n$CIAN******* METALLB CONFIGURE*******\n$WHITE";
-    printf "🔄    $WHITE Setting metallb..."
+    echo  "\n\n\n$CIAN************************ $WHITE ⭐️ METALLB CONFIGURE ⭐️ $CIAN************************\n$WHITE";
+    printf "🔄    $WHITE Setting metallb...\n"
     minikube addons enable metallb
     sleep 7
     kubectl apply -f ./srcs/metallb/metallb.yaml
     sleep 5
     minikube addons enable metrics-server
 }
+
 start_dashboard()
 {
     head
-    echo  "\n\n\n$CIAN******* STARTING KUBERNETES DASHBOARD 🖥 *******";
+    echo  "\n\n\n$CIAN******************** $WHITE STARTING KUBERNETES DASHBOARD  $CIAN*********************\n$WHITE";
     minikube dashboard &
-    echo "$WHITE"
 }
+
 # Creacion de imagenes con docker 
 build_image()
 {
     head
     eval $(minikube -p minikube docker-env)
-    echo  "\n\n\n$CIAN******* BULDING IMAGES ON 🐳 *******\n";
-
+    echo  "\n\n\n$CIAN************************ $WHITE 🐳  BUILDING IMAGES 🐳  $CIAN************************\n$WHITE";
     printf "🔄   $WHITE Nginx"
     eval $(minikube docker-env)
     docker build -t nginx ./srcs/nginx 2> error_nginx 1> /dev/null 
@@ -86,7 +81,7 @@ build_image()
         printf "\t\t ----> "
         cat ./error_nginx
         else
-        echo "\r✅    Nginx"
+        echo "\r🐳    Nginx"
         rm -rf error_nginx
     fi
     
@@ -99,7 +94,7 @@ build_image()
         cat ./error_mysql
         rm -rf error_mysql
         else
-        echo "\r✅    Mysql"
+        echo "\r🐳    Mysql"
         rm -rf error_mysql
     fi
 
@@ -112,7 +107,7 @@ build_image()
         cat ./error_php
         rm -rf error_php
         else
-        echo "\r✅    Phpmyadmin"
+        echo "\r🐳    Phpmyadmin"
         rm -rf error_php
     fi
 
@@ -125,10 +120,10 @@ build_image()
         cat ./error_wp
         rm -rf error_wp
         else
-        echo "\r✅    Wordpress"
+        echo "\r🐳    Wordpress"
         rm -rf error_wp
     fi
-    echo  "\n$CIAN********* BUILT IMAGES 🐳 *********";
+    echo  "\n$CIAN************************* $WHITE 🐳  BUILT IMAGES 🐳  $CIAN**************************\n$WHITE";
 }
 # Creacion de pods con docker 
 build_pod()
@@ -136,7 +131,8 @@ build_pod()
     head
     eval $(minikube -p minikube docker-env)
     eval $(minikube docker-env)
-    echo  "\n\n\n$CIAN******* BULDING PODS *******\n";
+    echo  "\n\n\n$CIAN************************* $WHITE 🧸 BUILDING PODS 🧸  $CIAN**************************\n$WHITE";
+
 
     printf "🔄     Nginx"
     kubectl apply -f ./srcs/nginx/nginx.yaml 2> error_nginx 1> /dev/null 
@@ -146,7 +142,7 @@ build_pod()
         printf "\t\t ----> "
         cat ./error_nginx
         else
-        echo "\r✅    Nginx"
+        echo "\r🍹    Nginx"
         rm -rf error_nginx
     fi
 
@@ -159,7 +155,7 @@ build_pod()
         cat ./error_mysql
         rm -rf error_mysql
         else
-        echo "\r✅    Mysql"
+        echo "\r🍺    Mysql"
         rm -rf error_mysql
     fi
 
@@ -172,7 +168,7 @@ build_pod()
         cat ./error_php
         rm -rf error_php
         else
-        echo "\r✅    Phpmyadmin"
+        echo "\r🍸    Phpmyadmin"
         rm -rf error_php
     fi
 
@@ -185,19 +181,17 @@ build_pod()
         cat ./error_wp
         rm -rf error_wp
         else
-        echo "\r✅    Wordpress"
+        echo "\r🍾    Wordpress"
         rm -rf error_wp
     fi
-        echo  "\n$CIAN********* BUILT PODS  *********";
-}
+    echo  "\n$CIAN************************** $WHITE 🧸 BUILT PODS 🧸  $CIAN***************************\n$WHITE";
+    }
 
 main ()
 {
     #minikube delete
     #sleep 3
     head
-    #reset_virtualbox
-    #sleep 5
     start_minikube
     sleep 7
     build_image
@@ -205,7 +199,6 @@ main ()
     build_pod
     sleep 5
     configure_metallb
-    sleep 3
     start_dashboard
 }
 

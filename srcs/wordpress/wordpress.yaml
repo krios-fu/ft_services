@@ -31,5 +31,5 @@ spec:
       - name: wordpress
         image: wordpress
         ports:
-        - containerPort: 5050
+        - containerPort: 80
           protocol: TCP
