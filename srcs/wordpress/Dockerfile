@@ -1,19 +1,17 @@
-FROM	alpine:3.12.1
+FROM        alpine:3.12.1
 
-COPY	wp-config.php setup.sh ./
+RUN         apk add \
+            php7 \
+            php7-mysqli \
+            php7-json \
+            php7-mbstring \
+            php7-fpm \
+            && wget http://wordpress.org/latest.tar.gz \
+            && tar -xzvf latest.tar.gz \
+            && rm latest.tar.gz \
+            && mkdir -p /var/www \
+            && mv /wordpress /var/www
 
-RUN		apk update && apk add wget \
-		&& apk add php7 php7-fpm php7-mysqli php7-mbstring php7-json
+COPY        wp-config.php /var/www/wordpress/
 
-ADD		https://wordpress.org/latest.tar.gz .
-
-RUN		tar -xvf latest.tar.gz \
-		&& rm latest.tar.gz \
-		&& mv wordpress /www \
-		&& mv wp-config.php /www/
-
-RUN 	chmod +x ./setup.sh
-
-EXPOSE 	5050
-
-CMD		./setup.sh
+ENTRYPOINT  php -S 0.0.0.0:5050 -t /var/www/wordpress/

@@ -53,7 +53,7 @@ configure_metallb()
     echo  "\n\n\n$CIAN************************ $WHITE ⭐️ METALLB CONFIGURE ⭐️ $CIAN************************\n$WHITE";
     printf "🔄    $WHITE Setting metallb...\n"
     minikube addons enable metallb
-    sleep 7
+    sleep 3
     kubectl apply -f ./srcs/metallb/metallb.yaml
     sleep 5
     minikube addons enable metrics-server

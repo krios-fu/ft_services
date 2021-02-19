@@ -1,1 +1,1 @@
-php -S 0.0.0.0:5050 -t /www/
+php -S 0.0.0.0:5050 -t /var/www/wordpress/
