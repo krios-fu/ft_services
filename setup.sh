@@ -196,9 +196,10 @@ main ()
     sleep 7
     build_image
     sleep 5
-    build_pod
-    sleep 5
     configure_metallb
+    sleep 5
+    build_pod
+    sleep 2
     start_dashboard
 }
 
