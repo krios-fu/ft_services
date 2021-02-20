@@ -63,7 +63,7 @@ start_dashboard()
 {
     head
     echo  "\n\n\n$CIAN******************** $WHITE STARTING KUBERNETES DASHBOARD  $CIAN*********************\n$WHITE";
-    minikube dashboard &
+    minikube dashboard
 }
 
 # Creacion de imagenes con docker 
