@@ -19,6 +19,7 @@ kind: Deployment
 metadata:
   name: wordpress
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: wordpress
@@ -35,3 +36,4 @@ spec:
         - containerPort: 5050
           name: wordpress
           protocol: TCP
+      restartPolicy: Always

@@ -50,3 +50,4 @@ spec:
         - name: ssh
           containerPort: 22
           protocol: TCP
+      restartPolicy: Always

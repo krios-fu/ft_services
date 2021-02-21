@@ -123,6 +123,19 @@ build_image()
         echo "\r🐳    Wordpress"
         rm -rf error_wp
     fi
+
+    printf "🔄    Ftps"
+    docker build -t ftps ./srcs/ftps 2> error_wp 1> /dev/null
+    if [ $(($(wc error_wp| xargs | cut -d" " -f2) + 0)) -gt 0 ] ;
+        then
+        echo "\r❌    Ftps"
+        printf "\t\t ----> "
+        cat ./error_wp
+        rm -rf error_wp
+        else
+        echo "\r🐳    Ftps"
+        rm -rf error_wp
+    fi
     echo  "\n$CIAN************************* $WHITE 🐳  BUILT IMAGES 🐳  $CIAN**************************\n$WHITE";
 }
 # Creacion de pods con docker 
@@ -184,6 +197,20 @@ build_pod()
         echo "\r🍾    Wordpress"
         rm -rf error_wp
     fi
+
+    printf "🔄    Ftps"
+    kubectl apply -f ./srcs/ftps 2> error_wp 1> /dev/null
+    if [ $(($(wc error_wp| xargs | cut -d" " -f2) + 0)) -gt 0 ] ;
+        then
+        echo "\r❌    Ftps"
+        printf "\t\t ----> "
+        cat ./error_wp
+        rm -rf error_wp
+        else
+        echo "\r🥃    Ftps"
+        rm -rf error_wp
+    fi
+    
     echo  "\n$CIAN************************** $WHITE 🧸 BUILT PODS 🧸  $CIAN***************************\n$WHITE";
     }
 
