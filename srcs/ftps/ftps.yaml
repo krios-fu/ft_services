@@ -6,20 +6,20 @@ spec:
   selector:
     app: ftps
   ports:
-    - name: ftp
-      protocol: TCP
-      port: 20
-      targetPort: 20
     - name: ftps
       protocol: TCP
       port: 21
       targetPort: 21
+    - port: 21000 
+      targetPort: 21000
+      protocol: TCP
+      name: ftps-data
   type: LoadBalancer
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ftpst
+  name: ftps
 spec:
   selector:
     matchLabels:
@@ -34,7 +34,9 @@ spec:
         image: ftps
         imagePullPolicy: Never
         ports:
-        - containerPort: 20
-          name: ftp
         - containerPort: 21
           name: ftps
+          protocol: TCP
+        - containerPort: 21000
+          protocol: TCP
+          name: ftps-data
