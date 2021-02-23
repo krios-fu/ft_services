@@ -6,14 +6,18 @@ spec:
   selector:
     app: ftps
   ports:
+    - name: data
+      port: 20
+      targetPort: 20
+      protocol: TCP
     - name: ftps
       protocol: TCP
       port: 21
       targetPort: 21
-    - port: 21000 
-      targetPort: 21000
+    - name: ftps-pasv 
+      port: 30021
+      targetPort: 30021
       protocol: TCP
-      name: ftps-data
   type: LoadBalancer
 ---
 apiVersion: apps/v1
@@ -24,6 +28,11 @@ spec:
   selector:
     matchLabels:
       app: ftps
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
   template:
     metadata:
       labels:
@@ -37,6 +46,7 @@ spec:
         - containerPort: 21
           name: ftps
           protocol: TCP
-        - containerPort: 21000
+        - containerPort: 30021
           protocol: TCP
           name: ftps-data
+      restartPolicy: Always
