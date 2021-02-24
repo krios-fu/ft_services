@@ -61,6 +61,14 @@ spec:
         volumeMounts:
         - name: mysql-storage
           mountPath: /var/lib/mysql
+        livenessProbe:
+          exec:
+            command:
+            - /bin/ash
+            - -c
+            - 'pgrep mysqld'
+          initialDelaySeconds: 10
+          periodSeconds: 5
       volumes:
       - name: mysql-storage
         persistentVolumeClaim:
