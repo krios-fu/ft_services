@@ -47,4 +47,12 @@ spec:
         - containerPort: 5000
           name: phpmyadmin
           protocol: TCP
+        livenessProbe:
+          exec:
+            command:
+            - /bin/ash
+            - -c
+            - 'pgrep php'
+          initialDelaySeconds: 10
+          periodSeconds: 5
       restartPolicy: Always

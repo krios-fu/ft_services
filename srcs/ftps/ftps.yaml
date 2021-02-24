@@ -49,4 +49,12 @@ spec:
         - containerPort: 30021
           protocol: TCP
           name: ftps-data
+        livenessProbe:
+          exec:
+            command:
+            - /bin/ash
+            - -c
+            - 'pgrep vsftpd'
+          initialDelaySeconds: 10
+          periodSeconds: 5
       restartPolicy: Always

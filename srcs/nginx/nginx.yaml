@@ -55,4 +55,12 @@ spec:
         - name: ssh
           containerPort: 22
           protocol: TCP
+        livenessProbe:
+          exec:
+            command:
+            - /bin/ash
+            - -c
+            - 'pgrep nginx && pgrep sshd'
+          initialDelaySeconds: 10
+          periodSeconds: 5
       restartPolicy: Always

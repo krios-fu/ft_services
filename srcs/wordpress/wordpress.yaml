@@ -41,4 +41,12 @@ spec:
         - containerPort: 5050
           name: wordpress
           protocol: TCP
+        livenessProbe:
+          exec:
+            command:
+            - /bin/ash
+            - -c
+            - 'pgrep php'
+          initialDelaySeconds: 10
+          periodSeconds: 5
       restartPolicy: Always
