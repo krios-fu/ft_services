@@ -6,8 +6,7 @@ RUN     apk update && \
 		apk upgrade && \
 		apk add --no-cache nginx && \
 		apk add --no-cache openssl && \
-		apk	add --no-cache openssh && \
-		apk add php7-fpm
+		apk	add --no-cache openssh
 
 RUN     adduser -D -g 'www' www && \
 		mkdir -p /run/nginx www

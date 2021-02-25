@@ -6,12 +6,27 @@ RUN         apk add \
             php7-json \
             php7-mbstring \
             php7-fpm \
-            && wget http://wordpress.org/latest.tar.gz \
+            php7-opcache \
+            nginx
+
+RUN         adduser -D -g 'www' www && \
+		    mkdir -p /run/nginx www
+
+RUN		    chown -R www:www /var/lib/nginx && \
+		    chown -R www:www /www
+
+RUN         wget http://wordpress.org/latest.tar.gz \
             && tar -xzvf latest.tar.gz \
             && rm latest.tar.gz \
-            && mkdir -p /var/www \
-            && mv /wordpress /var/www
+            && mv /wordpress /www/
 
-COPY        wp-config.php /var/www/wordpress/
 
-ENTRYPOINT  php -S 0.0.0.0:5050 -t /var/www/wordpress/
+COPY 	    /nginx.conf /etc/nginx/
+COPY        wp-config.php /www/wordpress/
+COPY        setup.sh ./
+
+RUN 	  chmod +x ./setup.sh
+
+EXPOSE 5050
+
+ENTRYPOINT  ./setup.sh
