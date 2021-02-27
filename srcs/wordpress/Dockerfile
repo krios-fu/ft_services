@@ -1,6 +1,6 @@
 FROM        alpine:3.12.1
 
-RUN         apk add \
+RUN         apk --no-cache add \
             php7 \
             php7-mysqli \
             php7-json \
@@ -21,12 +21,14 @@ RUN         wget http://wordpress.org/latest.tar.gz \
             && mv /wordpress /www/
 
 
-COPY 	    /nginx.conf /etc/nginx/
-COPY        wp-config.php /www/wordpress/
+COPY 	    nginx.conf /etc/nginx/nginx.conf
+COPY        wp-config.php /www/wordpress/wp-config.php
+COPY        fpm-pool.conf /etc/php7/fpm-pool.conf
+COPY        php.ini /etc/php7/php.ini
 COPY        setup.sh ./
 
 RUN 	  chmod +x ./setup.sh
 
 EXPOSE 5050
 
-ENTRYPOINT  ./setup.sh
+ENTRYPOINT ./setup.sh   
