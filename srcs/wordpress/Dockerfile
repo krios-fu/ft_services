@@ -22,7 +22,7 @@ RUN         wget http://wordpress.org/latest.tar.gz \
 
 
 COPY 	    nginx.conf /etc/nginx/nginx.conf
-COPY        wp-config.php /www/wordpress/
+COPY        wp-config.php /www/
 COPY        setup.sh ./
 
 RUN 	  chmod +x ./setup.sh

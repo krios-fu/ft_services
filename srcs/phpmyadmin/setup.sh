@@ -1,1 +1,3 @@
-/usr/bin/php -S 0.0.0.0:5000 -t /www
+#sleep 5
+php-fpm7  &
+/usr/sbin/nginx -g "daemon off;"
