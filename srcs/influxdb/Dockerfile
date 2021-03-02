@@ -1,9 +1,18 @@
-FROM 	alpine:3.12.1
+FROM 	    alpine:3.12.1
 
-RUN  	apk add --no-cache influxdb
+COPY        setup.sh ./
+RUN  	    apk add --no-cache influxdb
 
-EXPOSE 8086
+RUN         chmod +x ./setup.sh
 
-ENTRYPOINT influxd
+EXPOSE      8088
+
+WORKDIR     /usr/bin
+CMD         influx  \n CREATE DATABASE grafana \n \
+            CREATE USER kriosfu WITH PASSWORD kriosfu \n \
+            GRANT ALL ON grafana TO kriosfu
+
+
+ENTRYPOINT  /usr/sbin/influxd
 
 

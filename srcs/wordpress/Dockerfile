@@ -14,18 +14,20 @@ RUN         adduser -D -g 'www' www && \
 
 RUN		    chown -R www:www /var/lib/nginx && \
 		    chown -R www:www /www
-
+            
+            # Worpress 
 RUN         wget http://wordpress.org/latest.tar.gz \
             && tar -xzvf latest.tar.gz \
             && rm latest.tar.gz \
             && mv /wordpress /www/
 
-
+            # Archivos de configuracion
 COPY 	    nginx.conf /etc/nginx/nginx.conf
 COPY        wp-config.php /www/
-COPY        setup.sh ./
 
-RUN 	  chmod +x ./setup.sh
+COPY        setup.sh ./
+            # Permisos de ejecucion del script
+RUN 	    chmod +x ./setup.sh
 
 EXPOSE 5050
 
