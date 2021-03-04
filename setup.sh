@@ -125,16 +125,55 @@ build_image()
     fi
 
     printf "🔄    Ftps"
-    docker build -t ftps ./srcs/ftps 2> error_wp 1> /dev/null
-    if [ $(($(wc error_wp| xargs | cut -d" " -f2) + 0)) -gt 0 ] ;
+    docker build -t ftps ./srcs/ftps 2> error_ftps 1> /dev/null
+    if [ $(($(wc error_ftps| xargs | cut -d" " -f2) + 0)) -gt 0 ] ;
         then
         echo "\r❌    Ftps"
         printf "\t\t ----> "
-        cat ./error_wp
-        rm -rf error_wp
+        cat ./error_ftps
+        rm -rf error_ftps
         else
         echo "\r🐳    Ftps"
-        rm -rf error_wp
+        rm -rf error_ftps
+    fi
+
+    printf "🔄    Influxdb"
+    docker build -t ftps ./srcs/ftps 2> error_influx 1> /dev/null
+    if [ $(($(wc error_influx| xargs | cut -d" " -f2) + 0)) -gt 0 ] ;
+        then
+        echo "\r❌    Influxdb"
+        printf "\t\t ----> "
+        cat ./error_influx
+        rm -rf error_influx
+        else
+        echo "\r🐳    Influxdb"
+        rm -rf error_influx
+    fi
+
+    printf "🔄    Telegraf"
+    docker build -t ftps ./srcs/ftps 2> error_tele 1> /dev/null
+    if [ $(($(wc error_tele| xargs | cut -d" " -f2) + 0)) -gt 0 ] ;
+        then
+        echo "\r❌    Telegraf"
+        printf "\t\t ----> "
+        cat ./error_tele
+        rm -rf error_tele
+        else
+        echo "\r🐳    Telegraf"
+        rm -rf error_tele
+    fi
+
+    printf "🔄    Grafana"
+    docker build -t grafana ./srcs/grafana 2> error_grafana 1> /dev/null
+    if [ $(($(wc error_grafana| xargs | cut -d" " -f2) + 0)) -gt 0 ] ;
+        then
+        echo "\r❌    Grafana"
+        printf "\t\t ----> "
+        cat ./error_grafana
+        rm -rf error_grafana
+        else
+        echo "\r🐳    Grafana"
+        rm -rf error_grafana
     fi
     echo  "\n$CIAN************************* $WHITE 🐳  BUILT IMAGES 🐳  $CIAN**************************\n$WHITE";
 }
@@ -199,16 +238,56 @@ build_pod()
     fi
 
     printf "🔄    Ftps"
-    kubectl apply -f ./srcs/ftps 2> error_wp 1> /dev/null
-    if [ $(($(wc error_wp| xargs | cut -d" " -f2) + 0)) -gt 0 ] ;
+    kubectl apply -f ./srcs/ftps/ftps.yaml 2> error_ftp 1> /dev/null
+    if [ $(($(wc error_ftp| xargs | cut -d" " -f2) + 0)) -gt 0 ] ;
         then
         echo "\r❌    Ftps"
         printf "\t\t ----> "
-        cat ./error_wp
-        rm -rf error_wp
+        cat ./error_ftp
+        rm -rf error_ftp
         else
         echo "\r🥃    Ftps"
-        rm -rf error_wp
+        rm -rf error_ftp
+    fi
+
+      printf "🔄    Influxdb"
+    kubectl apply -f ./srcs/influxdb/influxdb.yaml 2> error_influx 1> /dev/null
+    if [ $(($(wc error_influx| xargs | cut -d" " -f2) + 0)) -gt 0 ] ;
+        then
+        echo "\r❌    Influxdb"
+        printf "\t\t ----> "
+        cat ./error_influx
+        rm -rf error_influx
+        else
+        echo "\r☕️   Influxdb"
+        rm -rf error_influx
+    fi
+
+  printf "🔄    Telegraf"
+    kubectl apply -f ./srcs/telegraf/telegraf.yaml 2> error_tele 1> /dev/null
+    if [ $(($(wc error_tele | xargs | cut -d" " -f2) + 0)) -gt 0 ] ;
+        then
+        echo "\r❌    Telegraf"
+        printf "\t\t ----> "
+        cat ./error_tele
+        rm -rf error_tele
+        else
+        echo "\r🍻   Telegraf"
+        rm -rf error_tele
+    fi
+    
+
+    printf "🔄    Grafana"
+    kubectl apply -f ./srcs/grafana/grafana.yaml 2> error_grafana 1> /dev/null
+    if [ $(($(wc error_grafana| xargs | cut -d" " -f2) + 0)) -gt 0 ] ;
+        then
+        echo "\r❌    Grafana"
+        printf "\t\t ----> "
+        cat ./error_grafana
+        rm -rf error_grafana
+        else
+        echo "\r🥂   Grafana"
+        rm -rf error_grafana
     fi
     
     echo  "\n$CIAN************************** $WHITE 🧸 BUILT PODS 🧸  $CIAN***************************\n$WHITE";
