@@ -11,7 +11,7 @@ RUN mkdir /etc/telegraf \
 && rm -rf *.tar.gz* telegraf/ \
 && rm -rf /var/cache/apk/*
 
-COPY telegraf.conf /etc/telegraf/telegraf.conf
+#COPY telegraf.conf /etc/telegraf/telegraf.conf
 COPY setup.sh .
 
 RUN chmod +x setup.sh

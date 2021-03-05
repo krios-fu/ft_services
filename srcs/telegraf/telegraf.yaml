@@ -1,11 +1,10 @@
 apiVersion: v1
-
 kind: Secret
 metadata:
   name: telegraf-secrets
 type: Opaque
 stringData:
-  INFLUXDB_DB: grafana
+  INFLUXDB_DB: containers
   INFLUXDB_URL: http://influxdb:8086
   INFLUXDB_USER: kriosfu
   INFLUXDB_USER_PASSWORD: kriosfu
@@ -29,7 +28,7 @@ data:
     # Configuration for sending metrics to InfluxDB
     [[outputs.influxdb]]
       urls = ["http://influxdb:8086"]
-      database = "influxdb"
+      database = "containers"
     ###############################################################################
     #                            INPUT PLUGINS                                    #
     ###############################################################################
@@ -60,13 +59,17 @@ metadata:
     name: telegraf
 spec:
   selector:
-    name: telegraf
-  clusterIP: None
+    app: telegraf
+  ports:
+    - port: 4999
+      targetPort: 4999
+      protocol: TCP
+  
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: telegraf-deployment
+  name: telegraf
 spec:
   replicas: 1
   selector:
@@ -79,8 +82,12 @@ spec:
     spec:
       serviceAccountName: telegraf-account
       containers:
-        - image: telegraf:alpine
+        - image: telegraf
           name: telegraf
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 4999
+              name: telegraf
           volumeMounts:
             - mountPath: /etc/telegraf/telegraf.conf
               name: telegraf-config

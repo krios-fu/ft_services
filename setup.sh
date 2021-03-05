@@ -138,7 +138,7 @@ build_image()
     fi
 
     printf "🔄    Influxdb"
-    docker build -t ftps ./srcs/ftps 2> error_influx 1> /dev/null
+    docker build -t influxdb ./srcs/ftps 2> error_influx 1> /dev/null
     if [ $(($(wc error_influx| xargs | cut -d" " -f2) + 0)) -gt 0 ] ;
         then
         echo "\r❌    Influxdb"
@@ -151,7 +151,7 @@ build_image()
     fi
 
     printf "🔄    Telegraf"
-    docker build -t ftps ./srcs/ftps 2> error_tele 1> /dev/null
+    docker build -t telegraf ./srcs/ftps 2> error_tele 1> /dev/null
     if [ $(($(wc error_tele| xargs | cut -d" " -f2) + 0)) -gt 0 ] ;
         then
         echo "\r❌    Telegraf"
@@ -259,7 +259,7 @@ build_pod()
         cat ./error_influx
         rm -rf error_influx
         else
-        echo "\r☕️   Influxdb"
+        echo "\r☕️    Influxdb"
         rm -rf error_influx
     fi
 
@@ -272,7 +272,7 @@ build_pod()
         cat ./error_tele
         rm -rf error_tele
         else
-        echo "\r🍻   Telegraf"
+        echo "\r🍻    Telegraf"
         rm -rf error_tele
     fi
     
@@ -286,7 +286,7 @@ build_pod()
         cat ./error_grafana
         rm -rf error_grafana
         else
-        echo "\r🥂   Grafana"
+        echo "\r🥂    Grafana"
         rm -rf error_grafana
     fi
     
