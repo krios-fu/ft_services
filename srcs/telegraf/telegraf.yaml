@@ -4,8 +4,8 @@ metadata:
   name: telegraf-secrets
 type: Opaque
 stringData:
-  INFLUXDB_DB: influxdb
-  INFLUXDB_URL: http://influxdb
+  INFLUXDB_DB: ft_services
+  INFLUXDB_URL: http://influxdb:8086
   INFLUXDB_USER: kriosfu
   INFLUXDB_USER_PASSWORD: kriosfu
 ---
@@ -27,8 +27,8 @@ data:
     ###############################################################################
     # Configuration for sending metrics to InfluxDB
     [[outputs.influxdb]]
-      urls = ["http://influxdb"]
-      database = "influxdb"
+      urls = ["http://influxdb:8086"]
+      database = "ft_services"
     ###############################################################################
     #                            INPUT PLUGINS                                    #
     ###############################################################################

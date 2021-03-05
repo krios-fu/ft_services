@@ -138,7 +138,7 @@ build_image()
     fi
 
     printf "🔄    Influxdb"
-    docker build -t influxdb ./srcs/ftps 2> error_influx 1> /dev/null
+    docker build -t influxdb ./srcs/influxdb 2> error_influx 1> /dev/null
     if [ $(($(wc error_influx| xargs | cut -d" " -f2) + 0)) -gt 0 ] ;
         then
         echo "\r❌    Influxdb"
@@ -151,7 +151,7 @@ build_image()
     fi
 
     printf "🔄    Telegraf"
-    docker build -t telegraf ./srcs/ftps 2> error_tele 1> /dev/null
+    docker build -t telegraf ./srcs/telegraf                 2> error_tele 1> /dev/null
     if [ $(($(wc error_tele| xargs | cut -d" " -f2) + 0)) -gt 0 ] ;
         then
         echo "\r❌    Telegraf"
