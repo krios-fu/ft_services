@@ -51,7 +51,7 @@ spec:
           mountPath: /var/lib/influxdb
         env:
         - name: INFLUXDB_DB
-          value: containers
+          value: influxdb
         - name: INFLUXDB_USER
           value: kriosfu
         - name: INFLUXDB_PASSWORD

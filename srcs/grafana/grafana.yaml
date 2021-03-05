@@ -41,6 +41,13 @@ spec:
         - containerPort: 3000
           protocol: TCP
           name: grafana
+        env:
+        - name: INFLUXDB_DB
+          value: influxdb
+        - name: INFLUXDB_USER
+          value: kriosfu
+        - name: INFLUXDB_PASSWORD
+          value: kriosfu
         livenessProbe:
           exec:
             command:
