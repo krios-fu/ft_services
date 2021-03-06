@@ -21,7 +21,7 @@ RUN		chown -R www:www /var/lib/nginx && \
 RUN 	chmod +x ./setup.sh
 
 COPY 	/nginx.conf /etc/nginx/
-COPY	/index.html /www/
+COPY	/index.php /www/
 
 RUN 	ssh-keygen -A && \
 		adduser -D ssh_admin && \

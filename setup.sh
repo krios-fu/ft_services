@@ -63,7 +63,7 @@ start_dashboard()
 {
     head
     echo  "\n\n\n$CIAN******************** $WHITE STARTING KUBERNETES DASHBOARD  $CIAN*********************\n$WHITE";
-    minikube dashboard
+    minikube dashboard &
 }
 
 # Creacion de imagenes con docker 
@@ -300,13 +300,13 @@ main ()
     head
     start_minikube
     sleep 7
+    start_dashboard
+    sleep 4
     build_image
     sleep 5
     configure_metallb
     sleep 5
     build_pod
-    sleep 2
-    start_dashboard
 }
 
 if [[ $1 == "x" ]]
