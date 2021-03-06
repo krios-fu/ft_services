@@ -1,6 +1,6 @@
 FROM    alpine:3.12.1
 
-COPY    ./setup.sh ./
+COPY    ./srcs/setup.sh ./
 
 # Install telegraf for monitoring
 RUN mkdir /etc/telegraf \
@@ -12,7 +12,7 @@ RUN mkdir /etc/telegraf \
 && rm -rf /var/cache/apk/*
 
 #COPY telegraf.conf /etc/telegraf/telegraf.conf
-COPY setup.sh .
+COPY ./srcs/setup.sh .
 
 RUN chmod +x setup.sh
 

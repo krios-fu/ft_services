@@ -734,7 +734,7 @@ CREATE TABLE `wp_users` (
 --
 
 INSERT INTO `wp_users` (`ID`, `user_login`, `user_pass`, `user_nicename`, `user_email`, `user_url`, `user_registered`, `user_activation_key`, `user_status`, `display_name`) VALUES
-(1, 'kriosfu', '$P$B0F3QhIyxygrHB59QL4xz7qYxEaj7x.', 'kriosfu', 'rios.kevin.12@gmail.com', 'http://192.168.99.103:5050', '2021-02-17 16:20:29', '', 0, 'kriosfu'),
+(1, 'kriosfu', '$P$BWmBQDdcJOWj1f0UaM.2UUWu1Rumkh.', 'kriosfu', 'rios.kevin.12@gmail.com', 'http://192.168.99.103:5050', '2021-02-17 16:20:29', '', 0, 'kriosfu'),
 (2, 'pepe42', '$P$BUGt25GrSxlYnbOoEZ4oqJCLV4da3u0', 'pepe42', 'pepe42@gmail.com', '', '2021-02-17 16:28:03', '1613579283:$P$BDG3RBVeUeoQ2sHuzQHiqFTHT5aXoo.', 0, 'Pepe Rodriguez'),
 (3, 'maria42', '$P$BDhWe6rVtw7iStpYYKOckOf0V/O/ta/', 'maria42', 'maria42@gmail.com', '', '2021-02-17 16:28:37', '1613579317:$P$BQn7Dn2UiS1lmZ2elr3wELSIHUYxg8.', 0, 'Maria castillo');
 

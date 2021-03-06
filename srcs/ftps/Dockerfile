@@ -7,7 +7,7 @@ RUN 	mkdir -p /etc/ftps/admin && \
 		adduser --home=/etc/ftps/admin -D admin && \ 
 		echo "admin:0101" | chpasswd
 
-COPY 	vsftpd.conf /etc/vsftpd/vsftpd.conf
+COPY 	./srcs/vsftpd.conf /etc/vsftpd/vsftpd.conf
 
 #RUN 	echo "admin" >> /etc/vsftpd.user_list
 

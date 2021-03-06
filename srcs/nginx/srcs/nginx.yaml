@@ -16,9 +16,6 @@ spec:
   - name: https
     port: 443
     protocol: TCP
-  - name: ssh
-    port: 22
-    protocol: TCP
   type: LoadBalancer
 ---
 apiVersion: apps/v1
@@ -52,15 +49,12 @@ spec:
         - name: https
           containerPort: 443
           protocol: TCP
-        - name: ssh
-          containerPort: 22
-          protocol: TCP
         livenessProbe:
           exec:
             command:
             - /bin/ash
             - -c
-            - 'pgrep nginx && pgrep sshd'
+            - 'pgrep nginx && pgrep php'
           initialDelaySeconds: 10
           periodSeconds: 5
       restartPolicy: Always

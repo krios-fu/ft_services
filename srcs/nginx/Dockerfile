@@ -1,12 +1,18 @@
 FROM	alpine:3.12.1
 
-COPY 	/setup.sh ./
+COPY 	./srcs/setup.sh ./
 
 RUN     apk update && \
 		apk upgrade && \
-		apk add --no-cache nginx && \
-		apk add --no-cache openssl && \
-		apk	add --no-cache openssh
+		apk add --no-cache nginx  php7-fpm \
+			php7 \
+            php7-mysqli \
+            php7-json \
+            php7-mbstring \
+            php7-fpm \
+            php7-opcache \
+			php \
+			openssl
 
 RUN     adduser -D -g 'www' www && \
 		mkdir -p /run/nginx www
@@ -20,13 +26,10 @@ RUN		chown -R www:www /var/lib/nginx && \
 
 RUN 	chmod +x ./setup.sh
 
-COPY 	/nginx.conf /etc/nginx/
-COPY	/index.php /www/
+COPY 	./srcs/nginx.conf /etc/nginx/
+COPY	./srcs/index.php /www/
+COPY	./srcs/index.css /www/
 
-RUN 	ssh-keygen -A && \
-		adduser -D ssh_admin && \
-		echo "ssh_admin:0101" | chpasswd
-
-EXPOSE	22 80 443
+EXPOSE	80 443
 
 CMD		./setup.sh

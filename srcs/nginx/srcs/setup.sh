@@ -1,5 +1,4 @@
-#START ssh
-/usr/sbin/sshd
+php-fpm7  &
 
 #START NGINX
 /usr/sbin/nginx -g "daemon off;"

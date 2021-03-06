@@ -63,7 +63,11 @@ start_dashboard()
 {
     head
     echo  "\n\n\n$CIAN******************** $WHITE STARTING KUBERNETES DASHBOARD  $CIAN*********************\n$WHITE";
-    minikube dashboard &
+    printf "🔄    Minikube Dashboard"
+    sleep 4
+    minikube dashboard & > /dev/null 
+    echo "\r✅    Minikube Dashboard"
+
 }
 
 # Creacion de imagenes con docker 
@@ -187,7 +191,7 @@ build_pod()
 
 
     printf "🔄     Nginx"
-    kubectl apply -f ./srcs/nginx/nginx.yaml 2> error_nginx 1> /dev/null 
+    kubectl apply -f ./srcs/nginx/srcs/nginx.yaml 2> error_nginx 1> /dev/null 
     if [ $(($(wc error_nginx| xargs | cut -d" " -f2) + 0)) -gt 0 ] ;
         then
         echo "$WHITE\r❌    Nginx"
@@ -199,7 +203,7 @@ build_pod()
     fi
 
     printf "🔄    Mysql"
-    kubectl apply -f ./srcs/mysql/mysql.yaml 2> error_mysql 1> /dev/null
+    kubectl apply -f ./srcs/mysql/srcs/mysql.yaml 2> error_mysql 1> /dev/null
     if [ $(($(wc error_mysql| xargs | cut -d" " -f2) + 0)) -gt 0 ] ;
         then
         echo "\r❌    Mysql"
@@ -212,7 +216,7 @@ build_pod()
     fi
 
     printf "🔄    Phpmyadmin"
-    kubectl apply -f ./srcs/phpmyadmin/phpmyadmin.yaml 2> error_php 1> /dev/null
+    kubectl apply -f ./srcs/phpmyadmin/srcs/phpmyadmin.yaml 2> error_php 1> /dev/null
     if [ $(($(wc error_php| xargs | cut -d" " -f2) + 0)) -gt 0 ] ;
         then
         echo "\r❌    Phpmyadmin"
@@ -225,7 +229,7 @@ build_pod()
     fi
 
     printf "🔄    Wordpress"
-    kubectl apply -f ./srcs/wordpress/wordpress.yaml 2> error_wp 1> /dev/null
+    kubectl apply -f ./srcs/wordpress/srcs/wordpress.yaml 2> error_wp 1> /dev/null
     if [ $(($(wc error_wp| xargs | cut -d" " -f2) + 0)) -gt 0 ] ;
         then
         echo "\r❌    Wordpress"
@@ -238,7 +242,7 @@ build_pod()
     fi
 
     printf "🔄    Ftps"
-    kubectl apply -f ./srcs/ftps/ftps.yaml 2> error_ftp 1> /dev/null
+    kubectl apply -f ./srcs/ftps/srcs/ftps.yaml 2> error_ftp 1> /dev/null
     if [ $(($(wc error_ftp| xargs | cut -d" " -f2) + 0)) -gt 0 ] ;
         then
         echo "\r❌    Ftps"
@@ -251,7 +255,7 @@ build_pod()
     fi
 
       printf "🔄    Influxdb"
-    kubectl apply -f ./srcs/influxdb/influxdb.yaml 2> error_influx 1> /dev/null
+    kubectl apply -f ./srcs/influxdb/srcs/influxdb.yaml 2> error_influx 1> /dev/null
     if [ $(($(wc error_influx| xargs | cut -d" " -f2) + 0)) -gt 0 ] ;
         then
         echo "\r❌    Influxdb"
@@ -264,7 +268,7 @@ build_pod()
     fi
 
   printf "🔄    Telegraf"
-    kubectl apply -f ./srcs/telegraf/telegraf.yaml 2> error_tele 1> /dev/null
+    kubectl apply -f ./srcs/telegraf/srcs/telegraf.yaml 2> error_tele 1> /dev/null
     if [ $(($(wc error_tele | xargs | cut -d" " -f2) + 0)) -gt 0 ] ;
         then
         echo "\r❌    Telegraf"
@@ -278,7 +282,7 @@ build_pod()
     
 
     printf "🔄    Grafana"
-    kubectl apply -f ./srcs/grafana/grafana.yaml 2> error_grafana 1> /dev/null
+    kubectl apply -f ./srcs/grafana/srcs/grafana.yaml 2> error_grafana 1> /dev/null
     if [ $(($(wc error_grafana| xargs | cut -d" " -f2) + 0)) -gt 0 ] ;
         then
         echo "\r❌    Grafana"
@@ -300,13 +304,14 @@ main ()
     head
     start_minikube
     sleep 7
-    start_dashboard
-    sleep 4
     build_image
     sleep 5
     configure_metallb
     sleep 5
     build_pod
+    sleep 7
+    start_dashboard
+    head
 }
 
 if [[ $1 == "x" ]]

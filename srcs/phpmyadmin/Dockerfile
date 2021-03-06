@@ -21,10 +21,10 @@ RUN         mv /usr/share/webapps/phpmyadmin /www/
 RUN         mkdir  -p  /etc/phpmyadmin/tmp \
             && chmod 777 /etc/phpmyadmin/tmp
 
-COPY 	    nginx.conf /etc/nginx/nginx.conf
-COPY        ./config.inc.php /etc/phpmyadmin/config.inc.php
+COPY 	    ./srcs/nginx.conf /etc/nginx/nginx.conf
+COPY        ./srcs/config.inc.php /etc/phpmyadmin/config.inc.php
 
-COPY        setup.sh ./
+COPY        ./srcs/setup.sh ./
 
 RUN 	  chmod +x ./setup.sh
 
