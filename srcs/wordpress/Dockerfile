@@ -29,6 +29,6 @@ COPY        ./srcs/setup.sh ./
             # Permisos de ejecucion del script
 RUN 	    chmod +x ./setup.sh
 
-EXPOSE 5050
+EXPOSE      5050
 
 ENTRYPOINT ./setup.sh   

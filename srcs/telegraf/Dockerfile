@@ -18,4 +18,4 @@ RUN chmod +x setup.sh
 
 EXPOSE 4999
 
-CMD ./setup.sh
+ENTRYPOINT  exec /usr/bin/telegraf $@ 

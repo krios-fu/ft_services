@@ -4,15 +4,7 @@ COPY 	./srcs/setup.sh ./
 
 RUN     apk update && \
 		apk upgrade && \
-		apk add --no-cache nginx  php7-fpm \
-			php7 \
-            php7-mysqli \
-            php7-json \
-            php7-mbstring \
-            php7-fpm \
-            php7-opcache \
-			php \
-			openssl
+		apk add --no-cache nginx openssl
 
 RUN     adduser -D -g 'www' www && \
 		mkdir -p /run/nginx www
@@ -27,9 +19,8 @@ RUN		chown -R www:www /var/lib/nginx && \
 RUN 	chmod +x ./setup.sh
 
 COPY 	./srcs/nginx.conf /etc/nginx/
-COPY	./srcs/index.php /www/
-COPY	./srcs/index.css /www/
+COPY	./srcs/index.html /www/
 
 EXPOSE	80 443
 
-CMD		./setup.sh
+ENTRYPOINT /usr/sbin/nginx -g "daemon off;"

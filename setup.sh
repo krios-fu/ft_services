@@ -65,7 +65,7 @@ start_dashboard()
     echo  "\n\n\n$CIAN******************** $WHITE STARTING KUBERNETES DASHBOARD  $CIAN*********************\n$WHITE";
     printf "🔄    Minikube Dashboard"
     sleep 4
-    minikube dashboard & > /dev/null 
+    minikube dashboard &
     echo "\r✅    Minikube Dashboard"
 
 }
@@ -311,7 +311,6 @@ main ()
     build_pod
     sleep 7
     start_dashboard
-    head
 }
 
 if [[ $1 == "x" ]]
