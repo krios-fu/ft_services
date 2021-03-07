@@ -55,7 +55,6 @@ configure_metallb()
     minikube addons enable metallb
     sleep 3
     kubectl apply -f ./srcs/metallb/metallb.yaml
-    sleep 5
     minikube addons enable metrics-server
 }
 
@@ -304,13 +303,13 @@ main ()
     head
     start_minikube
     sleep 7
+    start_dashboard
+    sleep 10
     build_image
     sleep 5
     configure_metallb
     sleep 5
     build_pod
-    sleep 7
-    start_dashboard
 }
 
 if [[ $1 == "x" ]]

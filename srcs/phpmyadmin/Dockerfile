@@ -24,9 +24,7 @@ RUN         mkdir  -p  /etc/phpmyadmin/tmp \
 COPY 	    ./srcs/nginx.conf /etc/nginx/nginx.conf
 COPY        ./srcs/config.inc.php /etc/phpmyadmin/config.inc.php
 
-COPY        ./srcs/setup.sh ./
-
-RUN 	    chmod +x ./setup.sh
-
 EXPOSE		5000
-ENTRYPOINT  ./setup.sh
+
+ENTRYPOINT  php-fpm7  && \
+            /usr/sbin/nginx -g "daemon off;"

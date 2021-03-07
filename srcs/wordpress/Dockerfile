@@ -25,10 +25,7 @@ RUN         wget http://wordpress.org/latest.tar.gz \
 COPY 	    ./srcs/nginx.conf /etc/nginx/nginx.conf
 COPY        ./srcs/wp-config.php /www/
 
-COPY        ./srcs/setup.sh ./
-            # Permisos de ejecucion del script
-RUN 	    chmod +x ./setup.sh
-
 EXPOSE      5050
 
-ENTRYPOINT ./setup.sh   
+ENTRYPOINT  php-fpm7  && \
+            /usr/sbin/nginx -g "daemon off;"
