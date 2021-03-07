@@ -26,7 +26,7 @@ COPY        ./srcs/config.inc.php /etc/phpmyadmin/config.inc.php
 
 COPY        ./srcs/setup.sh ./
 
-RUN 	  chmod +x ./setup.sh
+RUN 	    chmod +x ./setup.sh
 
 EXPOSE		5000
 ENTRYPOINT  ./setup.sh
