@@ -5,6 +5,8 @@ metadata:
   namespace: default
   labels:
     app: grafana
+  annotations:
+    metallb.universe.tf/allow-shared-ip: shared
 spec:
   selector:
     app: grafana
@@ -13,6 +15,7 @@ spec:
     targetPort: 3000
     protocol: TCP
   type: LoadBalancer
+  loadBalancerIP: 192.168.99.103
 ---
 apiVersion: apps/v1
 kind: Deployment

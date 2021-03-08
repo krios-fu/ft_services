@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    setup.sh                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: krios-fu <krios-fu@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2021/03/08 17:03:23 by krios-fu          #+#    #+#              #
+#    Updated: 2021/03/08 17:03:53 by krios-fu         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 #!/bin/bash -e
 
 BLUE='\033[0;34m'
@@ -7,8 +19,6 @@ GREEN='\033[1;32m'
 
 head()
 {
-    clear
-    clear
     clear
     clear
     clear
@@ -253,7 +263,7 @@ build_pod()
         rm -rf error_ftp
     fi
 
-      printf "🔄    Influxdb"
+    printf "🔄    Influxdb"
     kubectl apply -f ./srcs/influxdb/srcs/influxdb.yaml 2> error_influx 1> /dev/null
     if [ $(($(wc error_influx| xargs | cut -d" " -f2) + 0)) -gt 0 ] ;
         then
@@ -266,7 +276,7 @@ build_pod()
         rm -rf error_influx
     fi
 
-  printf "🔄    Telegraf"
+    printf "🔄    Telegraf"
     kubectl apply -f ./srcs/telegraf/srcs/telegraf.yaml 2> error_tele 1> /dev/null
     if [ $(($(wc error_tele | xargs | cut -d" " -f2) + 0)) -gt 0 ] ;
         then
@@ -296,20 +306,32 @@ build_pod()
     echo  "\n$CIAN************************** $WHITE 🧸 BUILT PODS 🧸  $CIAN***************************\n$WHITE";
     }
 
+finish ()
+{
+echo "\n\n\n"
+echo "$WHITE                               |               !!!                       .      .       _   _                   "
+echo "     >X<          ()_()        |.===.       \`  _ _  '       ()_()      .  .:::.        \'\\-//\`       __MMM__"    
+echo "    (o o)         (o o)        {}o o{}     -  (OXO)  -      (o o)        :(o o):  .     (o o)         (o o)  "   
+echo "ooO--(_)--Ooo-ooO--\`o\'--Ooo-ooO--(_)--Ooo-ooO--(_)--Ooo-ooO--\`o\'--Ooo-ooO--(_)--Ooo-ooO--(_)--Ooo-ooO--(_)--Ooo-"
+echo
+echo " Thank you      Grazie          Merci       Obrigado       Danke       감사합니다        谢谢        Gracias"
+}
+
 main ()
 {
-    #minikube delete
-    #sleep 3
     head
     start_minikube
     sleep 7
     start_dashboard
+    sleep 5
+    configure_metallb
     sleep 10
     build_image
     sleep 5
-    configure_metallb
-    sleep 5
     build_pod
+    sleep 10
+    head
+    finish
 }
 
 if [[ $1 == "x" ]]

@@ -5,6 +5,8 @@ metadata:
   namespace: default
   labels:
     app: phpmyadmin
+  annotations:
+    metallb.universe.tf/allow-shared-ip: shared
 spec:
   externalTrafficPolicy: Local
   selector:
@@ -14,6 +16,7 @@ spec:
     targetPort: 5000
     protocol: TCP
   type: LoadBalancer
+  loadBalancerIP: 192.168.99.103
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -39,10 +42,6 @@ spec:
       - name: phpmyadmin
         image: phpmyadmin
         imagePullPolicy: Never
-        resources:
-        args:
-          - sleep
-          - infinity 
         ports:
         - containerPort: 5000
           name: phpmyadmin
