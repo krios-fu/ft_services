@@ -20,6 +20,7 @@ RUN 		chmod +x ./setup.sh
 
 COPY 		./srcs/nginx.conf /etc/nginx/
 COPY		./srcs/index.html /www/
+COPY		./srcs/metro.jpg /www/
 
 EXPOSE		80 443
 
