@@ -1,7 +1,5 @@
 FROM		alpine:3.12.1
 
-COPY 		./srcs/setup.sh ./
-
 RUN     	apk update && \
 			apk upgrade && \
 			apk add --no-cache nginx openssl
@@ -16,7 +14,6 @@ RUN	 		chmod 700 /etc/ssl/private && \
 RUN			chown -R www:www /var/lib/nginx && \
 			chown -R www:www /www
 
-RUN 		chmod +x ./setup.sh
 
 COPY 		./srcs/nginx.conf /etc/nginx/
 COPY		./srcs/index.html /www/

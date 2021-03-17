@@ -7,6 +7,8 @@ RUN         chmod +x ./setup.sh
 
 EXPOSE      8086
 
-ENTRYPOINT  ./setup.sh  
+CMD         ./setup.sh
+
+ENTRYPOINT  /usr/sbin/influxd -config etc/influxdb.conf
 
 

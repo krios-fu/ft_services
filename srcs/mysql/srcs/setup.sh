@@ -10,4 +10,4 @@
 mysql wordpress -u root < wordpress.sql
 
 # Keep container running
-tail -f /dev/null
+/usr/bin/mysqld
